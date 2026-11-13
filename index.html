@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plakat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300..800&family=Outfit:wght@300..700&family=Syne:wght@400..800&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-M4_m-CG3.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-mVlxG17c.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-noise" aria-hidden="true"></div>
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Plakat">
+          <img class="brand-glyph" src="./assets/marks/pear.svg" alt="" />
+          <span class="brand-mark">Plakat</span>
+        </a>
+        <div class="switch" id="tool-switch" role="tablist" aria-label="Studio tools">
+          <div class="switch-thumb" id="tool-switch-thumb"></div>
+          <button type="button" id="tab-poster" role="tab" aria-pressed="true">Poster</button>
+          <button type="button" id="tab-icon" role="tab" aria-pressed="false">Icons</button>
+        </div>
+        <div class="topbar-spacer"></div>
+        <div class="top-actions" id="poster-actions">
+          <div class="size-control" id="size-control">
+            <div id="preset-host"></div>
+            <div class="size-fields" id="custom-size">
+              <span class="size-key">W</span>
+              <input id="custom-w" type="number" min="200" max="4000" aria-label="Width" />
+              <span class="size-key">H</span>
+              <input id="custom-h" type="number" min="200" max="4000" aria-label="Height" />
+            </div>
+          </div>
+          <button class="icon-btn" id="btn-undo" type="button" title="Undo (⌘Z)" aria-label="Undo" disabled>
+            <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 1 1 0 12h-3"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-redo" type="button" title="Redo (⌘⇧Z)" aria-label="Redo" disabled>
+            <svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 1 0 0 12h3"/></svg>
+          </button>
+          <button class="btn btn-ghost" id="btn-reset" type="button" title="Reset to the default poster">Reset</button>
+          <button class="btn btn-primary" id="btn-export" type="button">
+            Export
+            <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          </button>
+        </div>
+        <div class="top-actions" id="icon-actions" hidden>
+          <div class="switch" id="icon-mode-switch" role="tablist" aria-label="Icon modes">
+            <div class="switch-thumb" id="icon-mode-thumb"></div>
+            <button type="button" id="icon-mode-draw" aria-pressed="true">Draw</button>
+            <button type="button" id="icon-mode-lib" aria-pressed="false">Library</button>
+          </div>
+          <div id="svg-viewport-host"></div>
+          <button class="btn" id="btn-copy-svg" type="button">Copy SVG</button>
+          <button class="btn btn-primary" id="btn-icon-export" type="button">Export</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <nav class="rail" aria-label="Tools">
+          <button type="button" id="rail-poster" aria-pressed="true" title="Poster studio">
+            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5"/></svg>
+            Poster
+          </button>
+          <button type="button" id="rail-icon" aria-pressed="false" title="Icon studio">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+            Icons
+          </button>
+        </nav>
+
+        <aside class="library" id="library-pane">
+          <div class="pane-head"><span class="pane-title" id="library-title">Library</span></div>
+          <div class="tabs" id="library-tabs" role="tablist"></div>
+          <div class="pane-body" id="library-body"></div>
+          <section class="layers" id="layers-pane">
+            <div class="pane-head"><span class="pane-title">Layers</span></div>
+            <div class="pane-body" id="layers-body"></div>
+          </section>
+        </aside>
+
+        <main class="stage-wrap">
+          <div class="loading" id="loading">
+            <div class="loading-mark">Plakat</div>
+            <div class="loading-sub">Opening the studio</div>
+          </div>
+          <div id="poster-stage" class="stage" aria-label="Poster canvas"></div>
+          <div id="icon-stage" class="stage hidden" aria-label="Icon canvas"></div>
+          <div class="drop-overlay" id="drop-overlay" hidden>
+            <div class="drop-card">Drop images or icons to place them</div>
+          </div>
+          <div class="stage-caption" id="stage-caption">1080 × 1440 · Poster portrait</div>
+        </main>
+
+        <aside class="inspector" id="inspector">
+          <div class="pane-head"><span class="pane-title" id="inspector-title">Canvas</span></div>
+          <div class="pane-body" id="inspector-body"></div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="export-menu" id="export-menu" role="menu"></div>
+    <input id="file-bg" type="file" accept="image/*" hidden />
+    <input id="file-asset" type="file" accept="image/*,.svg" multiple hidden />
+    <input id="file-icon-asset" type="file" accept="image/*,.svg" multiple hidden />
+  </body>
+</html>

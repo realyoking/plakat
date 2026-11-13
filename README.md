@@ -1,2 +1,3 @@
-# plakat
-Plakat — poster and SVG icon studio
+# Plakat
+
+Poster and SVG icon studio.
